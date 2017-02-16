@@ -1,7 +1,7 @@
-export MUTATIONRETRY=10
-export GENERATIONS=200
-export MUTATIONRATE=5
+export MUTATIONRETRY=100
+export GENERATIONS=1000
+export MUTATIONRATE=2
 export verbose=false
 export RUNS=1
-export DRIFT=10
-export POOLSIZEBASE=10
+export DRIFT=2
+export POOLSIZEBASE=50
