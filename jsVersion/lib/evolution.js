@@ -7,9 +7,9 @@ module.exports = ({
   MUTATIONRETRY = 100,
   GENERATIONS = 50,
   MUTATIONRATE = 5,
-  L, H, matrix
+  L, H, matrix, verbose
 }) => {
-  let results = { initialPopulation: [], generations: [] }
+  let results = { generations: [] }
   let primitives = evolutionPrimitives(matrix, L, H)
   let maxFitness = matrix.length * matrix[0].length
   let population = []
@@ -19,13 +19,17 @@ module.exports = ({
     population.push(child)
   }
 
-  results.initialPopulation.push(primitives.fit(population))
+  if (verbose) results.initialPopulation = primitives.fit(population)
 
   for (let i = 0; i < GENERATIONS; i++) {
-    let testPopulation = primitives.fit(population)
-    results.generations.push({ generation: i, population: testPopulation })
-    let fittestChildren = testPopulation.slice(0, 10)
+    let generation = { generation: i }
+    let currentPopulation = primitives.fit(population)
+    verbose && Object.assign(generation, { population: currentPopulation })
+    let fittestChildren = currentPopulation.slice(0, 10)
     let fittest = fittestChildren[0]
+    generation.fittest = fittest
+
+    results.generations.push(generation)
 
     if (fittest.fitness === maxFitness) break
     population = []
@@ -40,9 +44,9 @@ module.exports = ({
       .map(child =>
         mutils.getRandomInt([1, 100]) < MUTATIONRATE ? primitives.mutate(child, MUTATIONRETRY) : child)
   }
-  let finalState = primitives.fit(population)
-  results.finalState = finalState
-  results.fittest = finalState[0]
+  let lastPopulation = primitives.fit(population)
+  if (verbose) results.lastPopulation = lastPopulation
+  results.fittest = lastPopulation[0]
 
   return results
 }

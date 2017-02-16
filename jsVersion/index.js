@@ -8,7 +8,8 @@ module.exports = (filename, config) => {
     POPULATIONSIZE: 100,
     MUTATIONRETRY: 100,
     GENERATIONS: 50,
-    MUTATIONRATE: 5
+    MUTATIONRATE: 5,
+    verbose: true
   }, config)
   return Object.assign(data, evolution(data))
 }
