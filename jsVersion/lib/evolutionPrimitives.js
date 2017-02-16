@@ -6,7 +6,7 @@ module.exports = (matrix, L, H) => {
 
   let createInstance = (tries) => {
     let instance = []
-    for (let i = 0; i < tries; i++) {
+    for (let i = 0; i < tries || instance.length < 1; i++) {
       let x1 = mutils.getRandomInt([0, matrix[0].length - 2])
       let y1 = mutils.getRandomInt([0, matrix.length - 2])
       let x2 = mutils.getRandomInt([x1 + 1, matrix[0].length - 1])
