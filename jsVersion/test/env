@@ -4,5 +4,4 @@ export MUTATIONRATE=5
 export CREATIONRETRY=10000
 export verbose=false
 export RUNS=1
-export DRIFT=5
-export POOLSIZEBASE=100
+export POOLSIZEBASE=50
