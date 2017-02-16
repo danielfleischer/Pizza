@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "source ./env && node index.js",
+    "test": "source ./test/env && mocha",
+    "benchmark": "source ./test/benchmark_env && mocha"
   },
   "author": "thehobbit85 <thehobbit85@gmail.com>",
   "license": "ISC",
