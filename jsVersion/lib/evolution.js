@@ -24,8 +24,9 @@ module.exports = ({
   for (let i = 0; i < GENERATIONS; i++) {
     let generation = { generation: i }
     let currentPopulation = primitives.fit(population)
+    let topPopulationSize = Math.sqrt(POPULATIONSIZE)
     verbose && Object.assign(generation, { population: currentPopulation })
-    let fittestChildren = currentPopulation.slice(0, 10)
+    let fittestChildren = currentPopulation.slice(0, topPopulationSize)
     let fittest = fittestChildren[0]
     generation.fittest = fittest
 
@@ -34,9 +35,10 @@ module.exports = ({
     if (fittest.fitness === maxFitness) break
     population = []
 
-    for (let j = 0; j < Math.sqrt(POPULATIONSIZE); j++) {
-      for (let k = 0; k < Math.sqrt(POPULATIONSIZE); k++) {
-        population.push(primitives.mate(fittestChildren[j].solution, fittestChildren[k].solution))
+    for (let j = 0; j < fittestChildren.length; j++) {
+      for (let k = 0; k < fittestChildren.length; k++) {
+        let child = primitives.mate(fittestChildren[j].solution, fittestChildren[k].solution)
+        population.push(child)
       }
     }
 

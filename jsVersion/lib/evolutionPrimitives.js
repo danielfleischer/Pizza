@@ -25,22 +25,21 @@ module.exports = (matrix, L, H) => {
     for (let i = 0; i < tries; i++) {
       let cord = mutils.getRandomInt([0, 1])
       let param = mutils.getRandomInt([0, 1])
-      let changeUp = mutils.getRandomInt([0, 1])
-      let amountToChange = changeUp ? 1 : -1
+      let amountToChange = mutils.getRandomInt([0, 1]) ? 1 : -1
       let slice = mutils.getRandomInt([0, slices.length - 1])
-      if (changeUp) {
+      if (~amountToChange) {
         if ((param && slices[slice][cord][param] < matrix.length - 1) ||
             (!param && slices[slice][cord][param] < matrix[0].length - 1)) {
           slices[slice][cord][param] += amountToChange
         }
-      } else if (!changeUp && slices[slice][cord][param] > 0) {
+      } else if (!~amountToChange && slices[slice][cord][param] > 0) {
         slices[slice][cord][param] += amountToChange
       }
       if (isSlicesValid(slices)) return slices
       else {
         slices[slice][cord][param] -= amountToChange
       }
-    }
+    } return slices
   }
 
   let fit = (population) => population
