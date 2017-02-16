@@ -3,6 +3,8 @@ const mutils = require('./mutils.js')
 
 module.exports = (matrix, L, H) => {
   let isSlicesValid = (slices) => mutils.isSlicesValid(slices, matrix, L, H)
+  let testNewSlice = (genes, newGene) =>
+    genes.push(newGene) && !isSlicesValid(genes) && genes.pop()
 
   let createInstance = (tries) => {
     let instance = []
@@ -11,9 +13,7 @@ module.exports = (matrix, L, H) => {
       let y1 = mutils.getRandomInt([0, matrix.length - 2])
       let x2 = mutils.getRandomInt([x1 + 1, matrix[0].length - 1])
       let y2 = mutils.getRandomInt([y1 + 1, matrix.length - 1])
-      instance.push([[x1, y1], [x2, y2]])
-      let isValid = !isSlicesValid(instance)
-      if (!isValid) instance.pop()
+      testNewSlice(instance, [[x1, y1], [x2, y2]])
     }
     return instance
   }
@@ -32,11 +32,7 @@ module.exports = (matrix, L, H) => {
     }
 
     let result = []
-    for (let i = 0; i < mixedChild.length; i++) {
-      result.push(mixedChild[i])
-      let isValid = isSlicesValid(result)
-      if (!isValid) result.pop()
-    }
+    for (let i = 0; i < mixedChild.length; i++) testNewSlice(result, mixedChild[i])
     return result
   }
 
