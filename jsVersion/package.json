@@ -9,6 +9,7 @@
   "author": "thehobbit85 <thehobbit85@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "jsonfile": "^2.4.0",
     "lodash": "^4.17.4",
     "shuffle-array": "^1.0.0"
   }

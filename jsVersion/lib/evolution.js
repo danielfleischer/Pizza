@@ -7,37 +7,27 @@ module.exports = ({
   MUTATIONRETRY = 100,
   GENERATIONS = 50,
   MUTATIONRATE = 5,
-  L,
-  H,
-  matrix
+  L, H, matrix
 }) => {
+  let results = { initialPopulation: [], generations: [] }
   let primitives = evolutionPrimitives(matrix, L, H)
   let maxFitness = matrix.length * matrix[0].length
-  let printChild = (step, child, num) => {
-    console.log(step, 'child -', num, '-', child)
-    console.log(step, 'fit -', mutils.singleFit(child))
-  }
-
-  console.log('matrix', matrix)
-
   let population = []
 
   for (let i = 0; i < POPULATIONSIZE; i++) {
     let child = primitives.createInstance(CREATIONRETRY)
-    printChild('new child -', child, i)
     population.push(child)
   }
 
+  results.initialPopulation.push(primitives.fit(population))
+
   for (let i = 0; i < GENERATIONS; i++) {
-    let fittestChildren = primitives.fit(population).slice(0, 10)
+    let testPopulation = primitives.fit(population)
+    results.generations.push({ generation: i, population: testPopulation })
+    let fittestChildren = testPopulation.slice(0, 10)
     let fittest = fittestChildren[0]
-    console.log('Fittest for Generation:', i)
-    console.log(fittest.solution)
-    console.log('Fitness:', fittest.fitness)
-    console.log('---------------------------')
 
     if (fittest.fitness === maxFitness) break
-
     population = []
 
     for (let j = 0; j < Math.sqrt(POPULATIONSIZE); j++) {
@@ -50,8 +40,9 @@ module.exports = ({
       .map(child =>
         mutils.getRandomInt([1, 100]) < MUTATIONRATE ? primitives.mutate(child, MUTATIONRETRY) : child)
   }
+  let finalState = primitives.fit(population)
+  results.finalState = finalState
+  results.fittest = finalState[0]
 
-  let best = primitives.fit(population)[0]
-  console.log('-------- End state of population -------')
-  console.log('Best Solution is:', best.solution, ' with fitness', best.fitness)
+  return results
 }

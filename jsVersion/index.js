@@ -1,25 +1,14 @@
-const evolution = require('./lib/evolution.js')
+const evolution = require('./lib/evolution')
+const inputFileToJSON = require('./lib/inputFileToJSON')
 
-let matrix =
-  [
-    [1, 1, 1, -1, 1, -1, 1],
-    [1, 1, -1, 1, 1, -1, 1],
-    [1, 1, 1, 1, -1, 1, 1],
-    [1, 1, 1, 1, -1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1],
-    [-1, -1, -1, -1, -1, -1, -1],
-    [1, -1, 1, -1, 1, -1, 1],
-    [1, -1, 1, -1, 1, -1, 1]
-  ]
-let [L, H] = [4, 15]
-
-evolution({
-  CREATIONRETRY: 30,
-  POPULATIONSIZE: 100,
-  MUTATIONRETRY: 100,
-  GENERATIONS: 50,
-  MUTATIONRATE: 5,
-  L,
-  H,
-  matrix
-})
+module.exports = (filename, config) => {
+  let data = inputFileToJSON(filename)
+  Object.assign(data, {
+    CREATIONRETRY: 30,
+    POPULATIONSIZE: 100,
+    MUTATIONRETRY: 100,
+    GENERATIONS: 50,
+    MUTATIONRATE: 5
+  }, config)
+  return Object.assign(data, evolution(data))
+}
