@@ -11,9 +11,9 @@ module.exports = (matrix, L, H) => {
       let y1 = mutils.getRandomInt([0, matrix.length - 2])
       let x2 = mutils.getRandomInt([x1 + 1, matrix[0].length - 1])
       let y2 = mutils.getRandomInt([y1 + 1, matrix.length - 1])
-      if (isSlicesValid(instance.concat([[[x1, y1], [x2, y2]]]))) {
-        instance = instance.concat([[[x1, y1], [x2, y2]]])
-      }
+      instance.push([[x1, y1], [x2, y2]])
+      let isValid = !isSlicesValid(instance)
+      if (!isValid) instance.pop()
     }
     return instance
   }
