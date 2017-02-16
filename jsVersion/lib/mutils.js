@@ -15,11 +15,11 @@ let isOverLap = (verifiedSlices, lx1, ly1, rx1, ry1) => {
 }
 
 let sumArea = ({matrix, x1, y1, x2, y2}) => {
-  let result = []
+  let result = 0
   for (let i = y1; i <= y2; i++) {
-    for (let j = x1; j <= x2; j++) result.push(matrix[i][j])
+    for (let j = x1; j <= x2; j++) result += matrix[i][j]
   }
-  return result.reduce((a, b) => a + b, 0)
+  return result
 }
 
 let isSlicesValid = (slices, matrix, L, H) => {
