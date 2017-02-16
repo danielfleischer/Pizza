@@ -33,13 +33,14 @@ module.exports = ({
     let topPopulationSize = Math.sqrt(POPULATIONSIZE)
     verbose && Object.assign(generation, { population: currentPopulation })
     let fittestChildren = currentPopulation.slice(0, topPopulationSize)
-    let fittest = fittestChildren[0]
-    generation.fittest = fittest
+    generation.fittest = fittestChildren[0]
     console.timeEnd('1. Select Fittest')
+    console.log('Best fitnest for This Generation:', generation.fittest.fitness)
+    console.log('Solution:', generation.fittest.solution)
 
     results.generations.push(generation)
 
-    if (fittest.fitness === maxFitness) break
+    if (generation.fittest.fitness === maxFitness) break
     population = []
 
     console.time('2. Mate')
