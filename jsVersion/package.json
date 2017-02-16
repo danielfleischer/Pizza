@@ -12,5 +12,8 @@
     "jsonfile": "^2.4.0",
     "lodash": "^4.17.4",
     "shuffle-array": "^1.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^3.2.0"
   }
 }
