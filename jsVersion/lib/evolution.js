@@ -25,7 +25,7 @@ module.exports = ({
   if (verbose) results.initialPopulation = primitives.fit(population)
 
   for (let i = 0; i < GENERATIONS; i++) {
-    console.time('Generation Number: ' + (i + 1))
+    console.time('End of Generation Number: ' + (i + 1))
     let generation = { generation: i }
 
     console.time('1. Select Fittest')
@@ -57,7 +57,7 @@ module.exports = ({
       .map(child => mutils.getRandomInt([1, 100]) < MUTATIONRATE ? primitives.mutate(child, MUTATIONRETRY) : child)
     console.timeEnd('3. Mutate')
 
-    console.timeEnd('Generation Number' + (i + 1))
+    console.timeEnd('End of Generation Number: ' + (i + 1))
   }
 
   let lastPopulation = primitives.fit(population)
