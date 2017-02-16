@@ -10,7 +10,8 @@ let config = {
   POPULATIONSIZE: 100,
   MUTATIONRETRY: 100,
   GENERATIONS: 50,
-  MUTATIONRATE: 5
+  MUTATIONRATE: 5,
+  verbose: false
 }
 if (!fs.existsSync(resultsdir)) fs.mkdirSync(resultsdir)
 
@@ -22,9 +23,11 @@ describe('testing on google samples', function () {
       files.forEach(function (file) {
         let filePath = path.join(inputFolder, file)
         let resultsFileName = path.join(resultsdir, file.split('.')[0] + '-' + (new Date()).getTime() + '.json')
-        config.CREATIONRETRY = file === 'medium' ? 5 : 30
-        config.POPULATIONSIZE = file === 'medium' ? 49 : 100
+        // config.CREATIONRETRY = file === 'medium' ? 5 : 30
+        // config.POPULATIONSIZE = file === 'medium' ? 49 : 100
+        console.time('evolution')
         let results = evolution(filePath, config)
+        console.timeEnd('evolution')
         jf.writeFileSync(resultsFileName, results)
         console.log('Finished with file', file)
       })
