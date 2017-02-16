@@ -10,7 +10,7 @@ module.exports = ({
   DRIFT = 5,
   L, H, matrix, verbose
 }) => {
-  let results = { generations: [] }
+  let results = { generations: [], fittest: { fitness: 0 } }
   let primitives = evolutionPrimitives(matrix, L, H)
   let maxFitness = matrix.length * matrix[0].length
   let population = []
@@ -34,6 +34,9 @@ module.exports = ({
     verbose && Object.assign(generation, { population: currentPopulation })
     let fittestChildren = currentPopulation.slice(0, topPopulationSize)
     generation.fittest = fittestChildren[0]
+    if (generation.fittest.fitness > results.fittest.fitness) {
+      results.fittest = generation.fittest
+    }
     console.timeEnd('1. Select Fittest')
     console.log('Best fitnest for This Generation:', generation.fittest.fitness)
     console.log('Solution:', generation.fittest.solution)
@@ -58,11 +61,13 @@ module.exports = ({
     console.timeEnd('3. Mutate')
 
     console.timeEnd('End of Generation Number: ' + (i + 1))
+    console.log('Best Fittnest so far:', results.fittest.fitness)
   }
 
   let lastPopulation = primitives.fit(population)
   if (verbose) results.lastPopulation = lastPopulation
-  results.fittest = lastPopulation[0]
-
+  if (lastPopulation[0].fitness > results.fittest.fitness) {
+    results.fittest = lastPopulation[0]
+  }
   return results
 }
