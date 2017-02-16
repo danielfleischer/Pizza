@@ -4,3 +4,4 @@ npm-debug.log
 /log
 coverage
 test-reports.tap
+jsVersion/test/results/*
