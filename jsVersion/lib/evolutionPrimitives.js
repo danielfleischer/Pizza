@@ -12,11 +12,8 @@ module.exports = (matrix, L, H) => {
       return isSlicesValid(r.concat([[[x1, y1], [x2, y2]]])) ? r.concat([[[x1, y1], [x2, y2]]]) : r
     }, [])
 
-  let singleFit = (S) => S.reduce((r, s) => r + mutils.area(s[0][0], s[0][1], s[1][0], s[1][1]), 0)
-
-  let mate = (s1, s2) => {
-    return shuffle(s1.concat(s2)).reduce((r, s) => isSlicesValid(r.concat([s])) ? r.concat([s]) : r, [])
-  }
+  let mate = (s1, s2) =>
+    shuffle(s1.concat(s2)).reduce((r, s) => isSlicesValid(r.concat([s])) ? r.concat([s]) : r, [])
 
   let mutate = (slices, tries) => {
     for (let i = 0; i < tries; i++) {
@@ -36,7 +33,7 @@ module.exports = (matrix, L, H) => {
   }
 
   let fit = (population) => population
-    .map(child => ({ solution: child, fitness: singleFit(child) }))
+    .map(child => ({ solution: child, fitness: mutils.singleFit(child) }))
     .sort((a, b) => {
       let fitA = parseInt(a.fitness)
       let fitB = parseInt(b.fitness)

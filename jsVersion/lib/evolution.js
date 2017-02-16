@@ -12,10 +12,10 @@ module.exports = ({
   matrix
 }) => {
   let primitives = evolutionPrimitives(matrix, L, H)
-
+  let maxFitness = matrix.length * matrix[0].length
   let printChild = (step, child, num) => {
     console.log(step, 'child -', num, '-', child)
-    console.log(step, 'fit -', primitives.fit(child))
+    console.log(step, 'fit -', mutils.singleFit(child))
   }
 
   console.log('matrix', matrix)
@@ -36,6 +36,8 @@ module.exports = ({
     console.log('Fitness:', fittest.fitness)
     console.log('---------------------------')
 
+    if (fittest.fitness === maxFitness) break
+
     population = []
 
     for (let j = 0; j < Math.sqrt(POPULATIONSIZE); j++) {
@@ -49,6 +51,7 @@ module.exports = ({
         mutils.getRandomInt([1, 100]) < MUTATIONRATE ? primitives.mutate(child, MUTATIONRETRY) : child)
   }
 
+  let best = primitives.fit(population)[0]
   console.log('-------- End state of population -------')
-  primitives.fit(population).forEach(child => console.log('solution', child.solution, 'fitness', child.fitness))
+  console.log('Best Solution is:', best.solution, ' with fitness', best.fitness)
 }

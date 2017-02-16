@@ -4,6 +4,8 @@ let getRandomInt = ([min, max]) => Math.floor(Math.random() * (max - min + 1)) +
 
 let area = (x1, y1, x2, y2) => Math.abs((x2 - x1 + 1) * (y2 - y1 + 1))
 
+let singleFit = (S) => S.reduce((r, s) => r + area(s[0][0], s[0][1], s[1][0], s[1][1]), 0)
+
 let flattenMatrix = ({matrix, x1, y1, x2, y2}) =>
   _(matrix)
     .filter((row, index) => index >= y1 && index <= y2)
@@ -44,5 +46,5 @@ let isSlicesValid = (slices, matrix, L, H) => {
   return true
 }
 
-module.exports = { area, getRandomInt, isOverlap, isSlicesValid }
+module.exports = { area, getRandomInt, isOverlap, isSlicesValid, singleFit }
 
