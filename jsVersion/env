@@ -3,4 +3,5 @@ export POPULATIONSIZE=100
 export MUTATIONRETRY=100
 export GENERATIONS=50
 export MUTATIONRATE=5
+export DRIFT=5
 export verbose=false

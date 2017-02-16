@@ -18,8 +18,27 @@ module.exports = (matrix, L, H) => {
     return instance
   }
 
-  let mate = (s1, s2) =>
-    shuffle(s1.concat(s2)).reduce((r, s) => isSlicesValid(r.concat([s])) ? r.concat([s]) : r, [])
+  let mate = (s1, s2, drift) => {
+    let leftGene = s1.slice(0, Math.ceil(s1.length / 2))
+    let rightGene = s2.slice(Math.floor(s2.length / 2))
+    let mixedChild = shuffle(leftGene.concat(rightGene))
+
+    if (mutils.getRandomInt([1, 100]) < drift) {
+      if (mutils.getRandomInt([0, 1])) {
+        mixedChild.push(s1[mutils.getRandomInt([Math.floor(s1.length / 2), s1.length - 1])])
+      } else {
+        mixedChild.push(s2[mutils.getRandomInt([0, Math.ceil(s2.length / 2)])])
+      }
+    }
+
+    let result = []
+    for (let i = 0; i < mixedChild.length; i++) {
+      result.push(mixedChild[i])
+      let isValid = isSlicesValid(result)
+      if (!isValid) result.pop()
+    }
+    return result
+  }
 
   let mutate = (slices, tries) => {
     for (let i = 0; i < tries; i++) {

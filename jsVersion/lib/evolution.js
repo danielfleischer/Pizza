@@ -7,6 +7,7 @@ module.exports = ({
   MUTATIONRETRY = 100,
   GENERATIONS = 50,
   MUTATIONRATE = 5,
+  DRIFT = 5,
   L, H, matrix, verbose
 }) => {
   let results = { generations: [] }
@@ -37,7 +38,7 @@ module.exports = ({
 
     for (let j = 0; j < fittestChildren.length; j++) {
       for (let k = 0; k < fittestChildren.length; k++) {
-        let child = primitives.mate(fittestChildren[j].solution, fittestChildren[k].solution)
+        let child = primitives.mate(fittestChildren[j].solution, fittestChildren[k].solution, DRIFT)
         population.push(child)
       }
     }
